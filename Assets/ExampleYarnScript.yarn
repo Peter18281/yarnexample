@@ -1,9 +1,9 @@
 title: Start
 ---
+<<declare $annoying = false as bool>>
 <<set $annoying to false>>
-<<if $gotname is false>>
- <<set $name to "Someone">>
-<<endif>>
+<<declare $gotName = false as bool>>
+<<declare $name = "Someone" as string>>
 Narrator: Red, Green or Blue?
     -> {$name}: Red. 
      <<bg_Red Background>>
@@ -29,9 +29,10 @@ Narrator: Red, Green or Blue?
 title: OtherNode
 ---
 <<set $gotName to false>>
+<<declare $left = false as bool>>
 <<set $left to false>>
 << if $annoying is false>>
-   Narrator: You're quite annoying, what do people call you?
+   Narrator: Now Pick a Name.
      -> {$name}: Peter.
        <<set $name to "Peter">>
      -> {$name}: Marius.
@@ -41,7 +42,7 @@ title: OtherNode
      -> {$name}: These aren't my name.
        <<set $name to "No one">>
 <<else>>
-   Now Pick A Name
+   Narrator: You're quite annoying, what do people call you?
      -> {$name}: Peter.
        <<set $name to "Peter">>
      -> {$name}: Marius.
@@ -51,7 +52,6 @@ title: OtherNode
      -> {$name}: These aren't my name.
         <<set $name to "Prick">>
         Narrator: You're really starting to annoy me.
-        <<cam_Shake MainCamera>>
         {$name}: haha
         Narrator: So you think this is funny.
         <<set $name to "Bug">>
@@ -64,6 +64,7 @@ title: OtherNode
           <<wait 2>>
           Narrator: I'm done with you.
           Narrator Leaves.
+          <<narr_Leave Narrator>>
           <<set $left to true>>
 <<endif>>
 <<set $gotName to true>>
@@ -75,7 +76,7 @@ title: OtherNode
  <<wait 1>>
  {$name}: Well then.
  {$name}: Guess I'll go too.
- {$name} Leaves.
+ {$name}: Leaves.
 <<else>>
  Narrator: Ok {$name}, Thanks for being easy to work with. See you next time.
  Narrator Leaves.
