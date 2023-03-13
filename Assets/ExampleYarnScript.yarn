@@ -1,73 +1,87 @@
 title: Start
 ---
-Yarn Spinner is a language for writing conversations in games!
-You can use it to write branching dialogue, and use that in a game engine!
-
-For example, here's a choice between some options!
-
--> Wow, some options!
-    You got it, pal!
--> Can I put text inside options?
-    You sure can!
-    For example, here's some lines inside an option.
-    You can even put options inside OTHER options!
-    -> Like this!
-        Wow!
-    -> Or this!
-        Incredible!
-
-// Comments start with two slashes, and won't show up in your conversation.
-// They're good for leaving notes!
-
-You can also write 'commands', which represent things that happen in the game!
-
-In this editor, they'll appear as text:
-
-<<fade_up 1.0>>
-
--> Nice!
-    Right??
--> But it didn't actually fade!
-    That's because this page doesn't know about 'fading', or any other feature. 
-    When you're testing your script on this page, we'll just show you your commands as text.
-    In a real game, you can define custom commands that do useful work!
-
-You can also use variables, which store information!
-
-Let's set a variable called "$name".
-
-<<set $name to "Yarn">>
-
-Done! You can see it appear in the list of variables at the bottom of the screen.
-
-We can use "$name" in lines: My name's {$name}!
-
--> What can I store in variables?
-    You can store text, numbers, and true/false values!
--> Where do variables get stored?
-    In this page, we store them in memory. When you use Yarn Spinner in a game engine, like Unity, you can store them in memory, or write custom code that stores them on disk alongside the rest of your saved game!
-
-We can also use 'if' statements to change what happens!
-
-Let's set a variable called '$gold' to 5.
-
-<<set $gold to 5>>
-
-Next, let's run different lines depending on what's stored inside '$gold':
-
-<<if $gold > 5>>
-    The '$gold' variable is bigger than 5!
-<<else>>
-    The '$gold' variable is 5 or less!
+<<set $annoying to false>>
+<<if $gotname is false>>
+ <<set $name to "Someone">>
 <<endif>>
-
-Finally, we can use the "jump" command to go to a different node! Let's do that now!
+Narrator: Red, Green or Blue?
+    -> {$name}: Red. 
+     <<bg_Red Background>>
+    -> {$name}: Green. 
+     <<bg_Green Background>>
+    -> {$name}: Blue.
+     <<bg_Blue Background>>
+    -> {$name}: What?
+     Narrator: Just Pick.
+       -> {$name}: Red.
+          <<bg_Red Background>>
+       -> {$name}: Green. 
+         <<bg_Green Background>>
+       -> {$name}: Blue.
+         <<bg_Blue Background>>
+       -> {$name}: Don't wanna.
+         <<set $annoying to true>>
+         Narrator: Fine you get blue.
+         <<bg_Blue Background>>
 
 <<jump OtherNode>>
 ===
 title: OtherNode
 ---
-Here we are in a different node! Nodes let you divide up your content into different blocks, which makes it easier to manage.
-
-We're all done! Try changing the text in the editor to the left, and clicking Test again!
+<<set $gotName to false>>
+<<set $left to false>>
+<< if $annoying is false>>
+   Narrator: You're quite annoying, what do people call you?
+     -> {$name}: Peter.
+       <<set $name to "Peter">>
+     -> {$name}: Marius.
+       <<set $name to "Marius">>
+     -> {$name}: Cameron.
+       <<set $name to "Cameron">>
+     -> {$name}: These aren't my name.
+       <<set $name to "No one">>
+<<else>>
+   Now Pick A Name
+     -> {$name}: Peter.
+       <<set $name to "Peter">>
+     -> {$name}: Marius.
+       <<set $name to "Marius">>
+     -> {$name}: Cameron.
+      <<set $name to "Cameron">>
+     -> {$name}: These aren't my name.
+        <<set $name to "Prick">>
+        Narrator: You're really starting to annoy me.
+        <<cam_Shake MainCamera>>
+        {$name}: haha
+        Narrator: So you think this is funny.
+        <<set $name to "Bug">>
+        {$name}: a little bit.
+        Narrator: I'll give you a chance to redeem yourself, do you want to start anew?
+         -> {$name}: Yeah
+          <<jump Start>>
+         -> {$name}: No
+          Narrator: I tried.
+          <<wait 2>>
+          Narrator: I'm done with you.
+          Narrator Leaves.
+          <<set $left to true>>
+<<endif>>
+<<set $gotName to true>>
+<<if $left is true>>
+ <<wait 1>>
+ {$name}: H-hello?
+ <<wait 1>>
+ {$name}: Is anyone there?
+ <<wait 1>>
+ {$name}: Well then.
+ {$name}: Guess I'll go too.
+ {$name} Leaves.
+<<else>>
+ Narrator: Ok {$name}, Thanks for being easy to work with. See you next time.
+ Narrator Leaves.
+ {$name}: Wait what?
+ {$name}: What was the point?
+ {$name}: Whatever.
+ {$name} Leaves.
+<<endif>>
 ===

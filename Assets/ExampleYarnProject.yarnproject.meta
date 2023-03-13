@@ -10,7 +10,27 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: 053561912b1654d80a424bb0696a74ae, type: 3}
   sourceScripts:
   - {fileID: 6391573757903218779, guid: fad7074e7796fc548b2bb1373b46077a, type: 3}
-  compileErrors: []
+  compileErrors:
+  - '1:0: Error: More than one node is named Start
+
+    title: Start
+
+'
+  - '69:0: Error: More than one node is named OtherNode
+
+    title: OtherNode
+
+'
+  - '1:0: Error: More than one node is named Start
+
+    title: Start
+
+'
+  - '70:0: Error: More than one node is named OtherNode
+
+    title: OtherNode
+
+'
   serializedDeclarations: []
   defaultLanguage: en-GB
   languagesToSourceAssets: []
